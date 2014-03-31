@@ -97,7 +97,7 @@ typedef struct
 	MQTTString password;
 } MQTTPacket_connectData;
 
-#define MQTTPacket_connectData_initializer { {'M', 'Q', 'T', 'W'}, 0, 3, {NULL, {0, NULL}}, 0, 1, 0, \
+#define MQTTPacket_connectData_initializer { {'M', 'Q', 'T', 'W'}, 0, 3, {"", {0, NULL}}, 60, 1, 0, \
 		MQTTPacket_willOptions_initializer, {NULL, {0, NULL}}, {NULL, {0, NULL}} }
 
 int MQTTSerialize_connect(char* buf, int buflen, MQTTPacket_connectData* options);
