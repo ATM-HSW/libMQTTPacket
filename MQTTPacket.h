@@ -97,6 +97,8 @@ int readMQTTLenString(MQTTString* mqttstring, char** pptr, char* enddata);
 void writeCString(char** pptr, char* string);
 void writeMQTTString(char** pptr, MQTTString mqttstring);
 
+int MQTTPacket_read(char* buf, int buflen, int (*getfn)(char*, int));
+
 #ifdef __cplusplus /* If this is a C++ compiler, use C linkage */
 }
 #endif
