@@ -200,6 +200,8 @@ void writeMQTTString(char** pptr, MQTTString mqttstring)
 	}
 	else if (mqttstring.cstring)
 		writeCString(pptr, mqttstring.cstring);
+	else
+		writeInt(pptr, 0);
 }
 
 
