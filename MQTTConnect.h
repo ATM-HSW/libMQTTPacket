@@ -82,7 +82,8 @@ typedef struct
 	char struct_id[4];
 	/** The version number of this structure.  Must be 0 */
 	int struct_version;
-	/** Version of MQTT to be used.  3 = 3.1 4 = 3.1.1 */
+	/** Version of MQTT to be used.  3 = 3.1 4 = 3.1.1
+	  */
 	int MQTTVersion;
 	MQTTString clientID;
 	int keepAliveInterval;
@@ -103,5 +104,6 @@ int MQTTSerialize_connack(char* buf, int buflen, int connack_rc);
 int MQTTDeserialize_connack(int* connack_rc, char* buf, int buflen);
 
 int MQTTSerialize_disconnect(char* buf, int buflen);
+int MQTTSerialize_pingreq(char* buf, int buflen);
 
 #endif /* MQTTCONNECT_H_ */

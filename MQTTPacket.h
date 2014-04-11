@@ -81,6 +81,7 @@ int MQTTstrlen(MQTTString mqttstring);
 #include "MQTTSubscribe.h"
 #include "MQTTUnsubscribe.h"
 
+int MQTTSerialize_ack(char* buf, int buflen, int type, int dup, int packetid);
 int MQTTDeserialize_ack(int* type, int* dup, int* packetid, char* buf, int buflen);
 
 int MQTTPacket_len(int rem_len);
@@ -94,10 +95,8 @@ char readChar(char** pptr);
 void writeChar(char** pptr, char c);
 void writeInt(char** pptr, int anInt);
 int readMQTTLenString(MQTTString* mqttstring, char** pptr, char* enddata);
-void writeCString(char** pptr, char* string);
+void writeCString(char** pptr, const char* string);
 void writeMQTTString(char** pptr, MQTTString mqttstring);
-
-int MQTTPacket_read(char* buf, int buflen, int (*getfn)(char*, int));
 
 #ifdef __cplusplus /* If this is a C++ compiler, use C linkage */
 }

@@ -174,7 +174,7 @@ void writeInt(char** pptr, int anInt)
  * @param pptr pointer to the output buffer - incremented by the number of bytes used & returned
  * @param string the C string to write
  */
-void writeCString(char** pptr, char* string)
+void writeCString(char** pptr, const char* string)
 {
 	int len = strlen(string);
 	writeInt(pptr, len);
