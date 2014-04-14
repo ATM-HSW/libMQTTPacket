@@ -227,6 +227,7 @@ int readMQTTLenString(MQTTString* mqttstring, char** pptr, char* enddata)
 			rc = 1;
 		}
 	}
+	mqttstring->cstring = NULL;
 	FUNC_EXIT_RC(rc);
 	return rc;
 }
