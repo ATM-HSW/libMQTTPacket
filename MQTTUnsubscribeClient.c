@@ -62,7 +62,7 @@ int MQTTSerialize_unsubscribe(char* buf, int buflen, int dup, int packetid, int 
 	}
 
 	header.byte = 0;
-	header.bits.type = SUBSCRIBE;
+	header.bits.type = UNSUBSCRIBE;
 	header.bits.dup = dup;
 	header.bits.qos = 1;
 	writeChar(&ptr, header.byte); /* write header */
