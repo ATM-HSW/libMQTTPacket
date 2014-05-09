@@ -148,6 +148,7 @@ int MQTTDeserialize_connack(int* connack_rc, char* buf, int buflen)
 		goto exit;
 
 	compression = readChar(&curdata);
+	compression = compression;	// hush compiler warnings
 	*connack_rc = readChar(&curdata);
 
 	rc = 1;
