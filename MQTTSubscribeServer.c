@@ -35,7 +35,7 @@
 int MQTTDeserialize_subscribe(unsigned char* dup, unsigned short* packetid, int maxcount, int* count, MQTTString topicFilters[],
 	int requestedQoSs[], unsigned char* buf, int buflen)
 {
-	MQTTHeader header;
+	MQTTHeader header = {0};
 	unsigned char* curdata = buf;
 	unsigned char* enddata = NULL;
 	int rc = -1;
@@ -81,7 +81,7 @@ exit:
   */
 int MQTTSerialize_suback(unsigned char* buf, int buflen, unsigned short packetid, int count, int* grantedQoSs)
 {
-	MQTTHeader header;
+	MQTTHeader header = {0};
 	int rc = -1;
 	unsigned char *ptr = buf;
 	int i;

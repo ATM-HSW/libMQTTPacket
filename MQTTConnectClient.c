@@ -58,8 +58,8 @@ int MQTTSerialize_connectLength(MQTTPacket_connectData* options)
 int MQTTSerialize_connect(unsigned char* buf, int buflen, MQTTPacket_connectData* options)
 {
 	unsigned char *ptr = buf;
-	MQTTHeader header;
-	MQTTConnectFlags flags;
+	MQTTHeader header = {0};
+	MQTTConnectFlags flags = {0};
 	int len = 0;
 	int rc = -1;
 
@@ -131,12 +131,12 @@ int MQTTSerialize_connect(unsigned char* buf, int buflen, MQTTPacket_connectData
   */
 int MQTTDeserialize_connack(unsigned char* sessionPresent, unsigned char* connack_rc, unsigned char* buf, int buflen)
 {
-	MQTTHeader header;
+	MQTTHeader header = {0};
 	unsigned char* curdata = buf;
 	unsigned char* enddata = NULL;
 	int rc = 0;
 	int mylen;
-	MQTTConnackFlags flags;
+	MQTTConnackFlags flags = {0};
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);
@@ -169,7 +169,7 @@ exit:
   */
 int MQTTSerialize_zero(unsigned char* buf, int buflen, unsigned char packettype)
 {
-	MQTTHeader header;
+	MQTTHeader header = {0};
 	int rc = -1;
 	unsigned char *ptr = buf;
 

@@ -36,7 +36,7 @@
 int MQTTDeserialize_publish(unsigned char* dup, int* qos, unsigned char* retained, unsigned short* packetid, MQTTString* topicName,
 		unsigned char** payload, int* payloadlen, unsigned char* buf, int buflen)
 {
-	MQTTHeader header;
+	MQTTHeader header = {0};
 	unsigned char* curdata = buf;
 	unsigned char* enddata = NULL;
 	int rc = 0;
@@ -81,7 +81,7 @@ exit:
   */
 int MQTTDeserialize_ack(unsigned char* packettype, unsigned char* dup, unsigned short* packetid, unsigned char* buf, int buflen)
 {
-	MQTTHeader header;
+	MQTTHeader header = {0};
 	unsigned char* curdata = buf;
 	unsigned char* enddata = NULL;
 	int rc = 0;

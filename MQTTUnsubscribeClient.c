@@ -50,7 +50,7 @@ int MQTTSerialize_unsubscribe(unsigned char* buf, int buflen, unsigned char dup,
 		int count, MQTTString topicFilters[])
 {
 	unsigned char *ptr = buf;
-	MQTTHeader header;
+	MQTTHeader header = {0};
 	int rem_len = 0;
 	int rc = -1;
 	int i = 0;
