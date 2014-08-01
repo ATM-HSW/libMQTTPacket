@@ -62,7 +62,7 @@ int MQTTSerialize_unsubscribe(char* buf, int buflen, int dup, int packetid, int 
 	}
 
 	header.byte = 0;
-	header.bits.type = UNSUBSCRIBE;
+	header.bits.type = SUBSCRIBE;
 	header.bits.dup = dup;
 	header.bits.qos = 1;
 	writeChar(&ptr, header.byte); /* write header */
@@ -91,7 +91,7 @@ exit:
 int MQTTDeserialize_unsuback(int* packetid, char* buf, int buflen)
 {
 	int type = 0;
-	int dup = 0;
+	unsigned char dup = 0;
 	int rc = 0;
 
 	FUNC_ENTRY;
