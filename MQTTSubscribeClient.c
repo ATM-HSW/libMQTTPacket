@@ -106,6 +106,7 @@ int MQTTDeserialize_suback(int* packetid, int maxcount, int* count, int grantedQ
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);
+	header.byte = header.byte;	// hush compiler warnings
 
 	curdata += (rc = MQTTPacket_decodeBuf(curdata, &mylen)); /* read remaining length */
 	enddata = curdata + mylen;

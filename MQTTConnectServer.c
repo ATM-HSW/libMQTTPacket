@@ -61,6 +61,7 @@ int MQTTDeserialize_connect(MQTTPacket_connectData* data, char* buf, int len)
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);
+	header.byte = header.byte;	// hush compiler warnings
 
 	curdata += MQTTPacket_decodeBuf(curdata, &mylen); /* read remaining length */
 

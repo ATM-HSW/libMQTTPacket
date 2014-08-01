@@ -98,6 +98,7 @@ void writeInt(char** pptr, int anInt);
 int readMQTTLenString(MQTTString* mqttstring, char** pptr, char* enddata);
 void writeCString(char** pptr, const char* string);
 void writeMQTTString(char** pptr, MQTTString mqttstring);
+int MQTTPacket_read(char* buf, int buflen, int (*getfn)(char*, int));
 
 int MQTTPacket_read(char* buf, int buflen, int (*getfn)(char*, int));
 
