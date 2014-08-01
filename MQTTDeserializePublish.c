@@ -44,6 +44,8 @@ int MQTTDeserialize_publish(unsigned char* dup, int* qos, unsigned char* retaine
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);
+	if (header.bits.type != PUBLISH)
+		goto exit;
 	*dup = header.bits.dup;
 	*qos = header.bits.qos;
 	*retained = header.bits.retain;

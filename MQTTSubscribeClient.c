@@ -107,6 +107,8 @@ int MQTTDeserialize_suback(unsigned short* packetid, int maxcount, int* count, i
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);
+	if (header.bits.type != SUBACK)
+		goto exit;
 
 	curdata += (rc = MQTTPacket_decodeBuf(curdata, &mylen)); /* read remaining length */
 	enddata = curdata + mylen;
