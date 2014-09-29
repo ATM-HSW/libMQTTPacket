@@ -101,6 +101,8 @@ void writeMQTTString(unsigned char** pptr, MQTTString mqttstring);
 
 int MQTTPacket_read(unsigned char* buf, int buflen, int (*getfn)(unsigned char*, int));
 
+char* MQTTPacket_toString(char* strbuf, int strbuflen, unsigned char* buf, int buflen);
+
 #ifdef __cplusplus /* If this is a C++ compiler, use C linkage */
 }
 #endif
