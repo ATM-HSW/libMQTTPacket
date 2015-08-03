@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 IBM Corp.
+ * Copyright (c) 2014, 2015 IBM Corp.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,38 +12,50 @@
  *
  * Contributors:
  *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Ian Craggs - add connack return code definitions 
  *******************************************************************************/
 
 #ifndef MQTTCONNECT_H_
 #define MQTTCONNECT_H_
 
-	typedef union
-	{
-		unsigned char all;	/**< all connect flags */
+enum connack_return_codes
+{
+	MQTT_CONNECTION_ACCEPTED = 0,
+	MQTT_UNNACCEPTABLE_PROTOCOL = 1,
+	MQTT_CLIENTID_REJECTED = 2,
+	MQTT_SERVER_UNAVAILABLE = 3,
+	MQTT_BAD_USERNAME_OR_PASSWORD = 4,
+	MQTT_NOT_AUTHORIZED = 5,
+};
+	
+
+typedef union
+{
+	unsigned char all;	/**< all connect flags */
 #if defined(REVERSED)
-		struct
-		{
-			unsigned int username : 1;			/**< 3.1 user name */
-			unsigned int password : 1; 			/**< 3.1 password */
-			unsigned int willRetain : 1;		/**< will retain setting */
-			unsigned int willQoS : 2;				/**< will QoS value */
-			unsigned int will : 1;			    /**< will flag */
-			unsigned int cleansession : 1;	  /**< clean session flag */
-			unsigned int : 1;	  	          /**< unused */
-		} bits;
+	struct
+	{
+		unsigned int username : 1;			/**< 3.1 user name */
+		unsigned int password : 1; 			/**< 3.1 password */
+		unsigned int willRetain : 1;		/**< will retain setting */
+		unsigned int willQoS : 2;				/**< will QoS value */
+		unsigned int will : 1;			    /**< will flag */
+		unsigned int cleansession : 1;	  /**< clean session flag */
+		unsigned int : 1;	  	          /**< unused */
+	} bits;
 #else
-		struct
-		{
-			unsigned int : 1;	     					/**< unused */
-			unsigned int cleansession : 1;	  /**< cleansession flag */
-			unsigned int will : 1;			    /**< will flag */
-			unsigned int willQoS : 2;				/**< will QoS value */
-			unsigned int willRetain : 1;		/**< will retain setting */
-			unsigned int password : 1; 			/**< 3.1 password */
-			unsigned int username : 1;			/**< 3.1 user name */
-		} bits;
+	struct
+	{
+		unsigned int : 1;	     					/**< unused */
+		unsigned int cleansession : 1;	  /**< cleansession flag */
+		unsigned int will : 1;			    /**< will flag */
+		unsigned int willQoS : 2;				/**< will QoS value */
+		unsigned int willRetain : 1;		/**< will retain setting */
+		unsigned int password : 1; 			/**< 3.1 password */
+		unsigned int username : 1;			/**< 3.1 user name */
+	} bits;
 #endif
-	} MQTTConnectFlags;	/**< connect flags byte */
+} MQTTConnectFlags;	/**< connect flags byte */
 
 
 
