@@ -12,6 +12,7 @@
  *
  * Contributors:
  *    Ian Craggs - initial API and implementation and/or initial documentation
+ *    Xiang Rong - 442039 Add makefile to Embedded C client
  *******************************************************************************/
 
 #ifndef MQTTPACKET_H_
@@ -21,11 +22,22 @@
 extern "C" {
 #endif
 
+#if defined(WIN32_DLL) || defined(WIN64_DLL)
+  #define DLLImport __declspec(dllimport)
+  #define DLLExport __declspec(dllexport)
+#elif defined(LINUX_SO)
+  #define DLLImport extern
+  #define DLLExport  __attribute__ ((visibility ("default")))
+#else
+  #define DLLImport
+  #define DLLExport  
+#endif
+
 enum errors
 {
 	MQTTPACKET_BUFFER_TOO_SHORT = -2,
 	MQTTPACKET_READ_ERROR = -1,
-	MQTTPACKET_READ_COMPLETE,
+	MQTTPACKET_READ_COMPLETE
 };
 
 enum msgTypes
@@ -80,14 +92,15 @@ int MQTTstrlen(MQTTString mqttstring);
 #include "MQTTPublish.h"
 #include "MQTTSubscribe.h"
 #include "MQTTUnsubscribe.h"
+#include "MQTTFormat.h"
 
-int MQTTSerialize_ack(unsigned char* buf, int buflen, unsigned char type, unsigned char dup, unsigned short packetid);
-int MQTTDeserialize_ack(unsigned char* packettype, unsigned char* dup, unsigned short* packetid, unsigned char* buf, int buflen);
+DLLExport int MQTTSerialize_ack(unsigned char* buf, int buflen, unsigned char type, unsigned char dup, unsigned short packetid);
+DLLExport int MQTTDeserialize_ack(unsigned char* packettype, unsigned char* dup, unsigned short* packetid, unsigned char* buf, int buflen);
 
 int MQTTPacket_len(int rem_len);
-int MQTTPacket_equals(MQTTString* a, char* b);
+DLLExport int MQTTPacket_equals(MQTTString* a, char* b);
 
-int MQTTPacket_encode(unsigned char* buf, int length);
+DLLExport int MQTTPacket_encode(unsigned char* buf, int length);
 int MQTTPacket_decode(int (*getcharfn)(unsigned char*, int), int* value);
 int MQTTPacket_decodeBuf(unsigned char* buf, int* value);
 
@@ -99,9 +112,18 @@ int readMQTTLenString(MQTTString* mqttstring, unsigned char** pptr, unsigned cha
 void writeCString(unsigned char** pptr, const char* string);
 void writeMQTTString(unsigned char** pptr, MQTTString mqttstring);
 
-int MQTTPacket_read(unsigned char* buf, int buflen, int (*getfn)(unsigned char*, int));
+DLLExport int MQTTPacket_read(unsigned char* buf, int buflen, int (*getfn)(unsigned char*, int));
 
-char* MQTTPacket_toString(char* strbuf, int strbuflen, unsigned char* buf, int buflen);
+typedef struct {
+	int (*getfn)(void *, unsigned char*, int); /* must return -1 for error, 0 for call again, or the number of bytes read */
+	void *sck;	/* pointer to whatever the system may use to identify the transport */
+	int multiplier;
+	int rem_len;
+	int len;
+	char state;
+}MQTTTransport;
+
+int MQTTPacket_readnb(unsigned char* buf, int buflen, MQTTTransport *trp);
 
 #ifdef __cplusplus /* If this is a C++ compiler, use C linkage */
 }
